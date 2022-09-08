@@ -34,17 +34,17 @@ export default function Quotes() {
           >
             {quote.change <= 0 && true ? (
               <Wrapper>
-                <div>{quote.change_percent}</div>
                 <Ticker>{quote.ticker}</Ticker>
                 <Stock>{quote.exchange}</Stock>
                 <Increase>{quote.price}</Increase>
+                <div>{quote.change_percent}</div>
               </Wrapper>
             ) : (
               <Wrapper>
-                <div>{quote.change_percent}</div>
                 <Ticker>{quote.ticker}</Ticker>
                 <Stock>{quote.exchange}</Stock>
                 <Decrease>{quote.price}</Decrease>
+                <div>{quote.change_percent}</div>
               </Wrapper>
             )}
             {/* {`Bonds -${quote.ticker} BondsMarket- ${quote.exchange} Price- ${quote.price} changeIs(${quote.change})`} */}
