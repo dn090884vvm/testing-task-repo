@@ -11,8 +11,8 @@ const quotesSlice = createSlice({
     getQuote: (state, action) => {
       if (state.quotes.length === 0) {
         return {
-          ...state,
-          ...action.payload,
+          //   ...state,
+          //   ...action.payload,
           quotes: [
             ...action.payload.map((item) => ({
               ...item,
@@ -23,13 +23,16 @@ const quotesSlice = createSlice({
         };
       }
       return {
-        ...state,
+        // ...state,
         quotes: [
           ...action.payload.map((item, num) => ({
             ...item,
-            ...action.payload,
-
+            // ...action.payload,
             change: parseFloat(state.quotes[num].price - item.price).toFixed(2),
+
+            change_percent: parseFloat(
+              100 - (state.quotes[num].price / item.price) * 100
+            ).toFixed(2),
           })),
         ],
       };

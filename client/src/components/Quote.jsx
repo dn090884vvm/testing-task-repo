@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { getQuote } from "../redux/quotes/quotesSlice";
-import s from "../components/Quote.css";
+
 import { Increase, Decrease, Wrapper, Ticker, Stock } from "./Quote.styled";
 
 export default function Quotes() {
@@ -28,18 +28,20 @@ export default function Quotes() {
         {stateQuotes.map((quote) => (
           <li
             key={quote.ticker}
-            className={`${
-              quote.change >= 0 && true ? "s.increase" : "s.decrease"
-            }`}
+            // className={`${
+            //   quote.change >= 0 && true ? "s.increase" : "s.decrease"
+            // }`}
           >
-            {quote.change >= 0 && true ? (
+            {quote.change <= 0 && true ? (
               <Wrapper>
+                <div>{quote.change_percent}</div>
                 <Ticker>{quote.ticker}</Ticker>
                 <Stock>{quote.exchange}</Stock>
                 <Increase>{quote.price}</Increase>
               </Wrapper>
             ) : (
               <Wrapper>
+                <div>{quote.change_percent}</div>
                 <Ticker>{quote.ticker}</Ticker>
                 <Stock>{quote.exchange}</Stock>
                 <Decrease>{quote.price}</Decrease>
