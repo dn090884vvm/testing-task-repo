@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import { getQuote } from "../redux/quotes/quotesSlice";
 
-import { Increase, Decrease, Wrapper, Ticker, Stock } from "./Quote.styled";
+import {
+  Increase,
+  Decrease,
+  Wrapper,
+  Ticker,
+  List,
+  WrapperInfo,
+  ListItem,
+} from "./Quote.styled";
 
 export default function Quotes() {
   const dispatch = useDispatch();
@@ -22,35 +30,62 @@ export default function Quotes() {
     });
   }, [dispatch]);
 
+  const arrowUp = (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      focusable="false"
+      fill="#3ba520"
+    >
+      <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"></path>
+    </svg>
+  );
+  const arrowDown = (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      focusable="false"
+      fill="#cd351a"
+    >
+      <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"></path>
+    </svg>
+  );
+
   return (
     <div>
-      <ul>
+      <List>
         {stateQuotes.map((quote) => (
-          <li
-            key={quote.ticker}
-            // className={`${
-            //   quote.change >= 0 && true ? "s.increase" : "s.decrease"
-            // }`}
-          >
-            {quote.change <= 0 && true ? (
+          <ListItem key={quote.ticker}>
+            {quote.change >= 0 && true ? (
               <Wrapper>
-                <Ticker>{quote.ticker}</Ticker>
-                <Stock>{quote.exchange}</Stock>
-                <Increase>{quote.price}</Increase>
-                <div>{quote.change_percent}</div>
+                {arrowUp}
+                <WrapperInfo>
+                  <Ticker>{quote.ticker}</Ticker>
+                  <Increase>{quote.price}</Increase>
+                </WrapperInfo>
+                <WrapperInfo>
+                  <div>{`${quote.change} pts`}</div>
+                  <div>{`${quote.change_percent} %`}</div>
+                </WrapperInfo>
               </Wrapper>
             ) : (
               <Wrapper>
-                <Ticker>{quote.ticker}</Ticker>
-                <Stock>{quote.exchange}</Stock>
-                <Decrease>{quote.price}</Decrease>
-                <div>{quote.change_percent}</div>
+                {arrowDown}
+                <WrapperInfo>
+                  <Ticker>{quote.ticker}</Ticker>
+                  <Decrease>{quote.price}</Decrease>
+                </WrapperInfo>
+                <WrapperInfo>
+                  <div>{`${quote.change} pts`}</div>
+                  <div>{`${quote.change_percent} %`}</div>
+                </WrapperInfo>
               </Wrapper>
             )}
-            {/* {`Bonds -${quote.ticker} BondsMarket- ${quote.exchange} Price- ${quote.price} changeIs(${quote.change})`} */}
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 }
